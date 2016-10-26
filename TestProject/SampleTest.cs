@@ -22,7 +22,7 @@ namespace TestProject
         [TestMethod]
         public void TestTotalOrder()
         {
-            DiscountCalculator dc = new DiscountCalculator(null);
+            DiscountCalculator dc = new DiscountCalculator(new Promotion());
 
             Order newOrder = dc.CalculateDiscount(GetOrder());
 

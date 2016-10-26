@@ -25,7 +25,10 @@ namespace PromotionCS
                 double total = 0;
                 foreach (OrderItem item in Items)
                 {
-                    total += item.Product.Price;
+                    for (int i = 0; i < item.Quantity; i++)
+                    {
+                        total += item.Product.Price;
+                    }
                 }
 
                 return total;
@@ -39,7 +42,10 @@ namespace PromotionCS
                 double total = 0;
                 foreach (OrderItem item in Items)
                 {
-                    total += item.Product.Price;
+                    for (int i = 0; i < item.Quantity; i++)
+                    {
+                        total += item.Product.Price;
+                    }
                 }
 
                 return total - Discount;

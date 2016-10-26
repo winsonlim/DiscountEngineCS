@@ -12,6 +12,12 @@ namespace PromotionCS
         public string Name { get; set; }
         public int EveryRepeatedItem { get; set; }
 
+        public Promotion()
+        {
+            Name = "";
+            EveryRepeatedItem = 0;
+            Discount = 0;
+        }
 
         public Promotion(string name, double discount, int everyRepeatedItem)
         {

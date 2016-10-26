@@ -11,18 +11,121 @@ namespace TestProject
         public void Test1ABuy1Item()
         {
             //setup
-            Promotion promo = new Promotion("Multi-item discount", 0.30, 2);
+            Promotion promo = new Promotion("multi", 0.30, 2);
             DiscountCalculator dc = new DiscountCalculator(promo);
 
-            Order order = null; //TODO: setup the order, you can refer to SampleTest.cs for example
+            Order o = new Order();
+            o.Add(Products.GetProduct("blueDress"), 1);
 
             //exercise
-            Order newOrder = dc.CalculateDiscount(order);
+            Order newOrder = dc.CalculateDiscount(o);
 
             //verify
-            double expectedValue = 0;//TODO: set the expected value;
+            double expectedValue = 100;
+
             Assert.AreEqual(expectedValue, newOrder.TotalPrice, 0.001);
-            //TODO: add additional verification if necessary
+            
+        }
+
+        [TestMethod]
+        public void Test2Buy2Items()
+        {
+            //setup
+            Promotion promo = new Promotion("multi", 0.30, 2);
+            DiscountCalculator dc = new DiscountCalculator(promo);
+
+            Order o = new Order();
+            o.Add(Products.GetProduct("blueDress"), 2);
+
+            //exercise
+            Order newOrder = dc.CalculateDiscount(o);
+
+            //verify
+            double expectedValue = 170;
+
+            Assert.AreEqual(expectedValue, newOrder.DiscountedPrice, 0.001);
+
+        }
+
+        [TestMethod]
+        public void Test3ABuy4Items()
+        {
+            //setup
+            Promotion promo = new Promotion("multi", 0.30, 2);
+            DiscountCalculator dc = new DiscountCalculator(promo);
+
+            Order o = new Order();
+            o.Add(Products.GetProduct("blueDress"), 4);
+
+            //exercise
+            Order newOrder = dc.CalculateDiscount(o);
+
+            //verify
+            double expectedValue = 340;
+
+            Assert.AreEqual(expectedValue, newOrder.DiscountedPrice, 0.001);
+
+        }
+
+        [TestMethod]
+        public void TestProgressiveDiscountBuy1Item()
+        {
+            //setup
+            Promotion promo = new Promotion("progressive", 0.10, 0);
+            DiscountCalculator dc = new DiscountCalculator(promo);
+
+            Order o = new Order();
+            o.Add(Products.GetProduct("blueDress"), 1);
+
+            //exercise
+            Order newOrder = dc.CalculateDiscount(o);
+
+            //verify
+            double expectedValue = 90;
+
+            Assert.AreEqual(expectedValue, newOrder.DiscountedPrice, 0.001);
+
+        }
+
+        [TestMethod]
+        public void TestProgressiveDiscountBuy2Items()
+        {
+            //setup
+            Promotion promo = new Promotion("progressive", 0.10, 0);
+            DiscountCalculator dc = new DiscountCalculator(promo);
+
+            Order o = new Order();
+            o.Add(Products.GetProduct("blueDress"), 2);
+
+            //exercise
+            Order newOrder = dc.CalculateDiscount(o);
+
+            //verify
+            double expectedValue = 190;
+
+            Assert.AreEqual(expectedValue, newOrder.DiscountedPrice, 0.001);
+        }
+
+
+        [TestMethod]
+        public void TestProgressiveDiscountBuy3Items()
+        {
+            //setup
+            Promotion promo = new Promotion("progressive", 0.20, 0);
+            DiscountCalculator dc = new DiscountCalculator(promo);
+
+            Order o = new Order();
+            o.Add(Products.GetProduct("blueDress"), 3);
+            o.Add(Products.GetProduct("redDress"), 3);
+
+            //exercise
+            Order newOrder = dc.CalculateDiscount(o);
+
+            //verify
+            double expectedValue = 480;
+
+            Assert.AreEqual(expectedValue, newOrder.DiscountedPrice, 0.001);
+
         }
     }
 }

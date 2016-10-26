@@ -22,19 +22,56 @@ namespace PromotionCS
 
             var items = order.Items;
 
-            for (int i = 0; i < items.Count; i++) {
-                var eachItem = items[i];
+            switch (Promo.Name) {
+                case "multi":
+                    foreach (OrderItem item in items) {
+                        for (int i = 0; i < item.Quantity; i++) {
+                            // +1 to get first item as index 1.
+                            if (Promo.EveryRepeatedItem == 0) {
+                                // No discounts
+                                break;
+                            }
 
-                if (i+1 % Promo.EveryRepeatedItem == 0) {
-                    var originalPrice = eachItem.Product.Price;
+                            if ((i + 1) % Promo.EveryRepeatedItem == 0) {
+                                // Calculate discounted price
+                                var originalPrice = item.Product.Price;
 
-                    var discount = originalPrice * Promo.Discount;
+                                var discount = originalPrice * Promo.Discount;
+                                order.Discount += discount;
+                            }
+                        }
+                    }
 
-                }
-            
+                    break;
+                    case "progressive":
+                        foreach (OrderItem item in items) {
+                            if (item.Quantity > 2) {
+                                // 20% whole cart
+                                for (int i = 0; i < item.Quantity; i++) {
+                                    var originalPrice = item.Product.Price;
+
+                                    var discount = originalPrice * Promo.Discount;
+                                    order.Discount += discount;
+                                }
+                            }
+                            else
+                            {   
+                                // 10% discount first item only
+                                for (int i = 0; i < item.Quantity; i++)
+                                {
+                                    var originalPrice = item.Product.Price;
+                                    var discount = 0.0;
+                                    if (i == 0) {
+                                        discount = originalPrice * Promo.Discount;
+                                    }
+                                    
+                                    order.Discount += discount;
+                                }
+                            }
+
+                        }
+                    break;
             }
-
-            // order.Discount=100.00;
 
             return order;
         }
