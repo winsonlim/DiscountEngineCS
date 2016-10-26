@@ -11,7 +11,7 @@ namespace TestProject
         public void Test1ABuy1Item()
         {
             //setup
-            Promotion promo = new Promotion(); //TODO: setup the promotion as you see fit
+            Promotion promo = new Promotion("Multi-item discount", 0.30, 2);
             DiscountCalculator dc = new DiscountCalculator(promo);
 
             Order order = null; //TODO: setup the order, you can refer to SampleTest.cs for example

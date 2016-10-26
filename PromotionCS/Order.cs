@@ -9,6 +9,8 @@ namespace PromotionCS
 {
     public class Order
     {
+        public double Discount { get; set; }
+
         public List<OrderItem> Items { get; set; }
 
         public Order()
@@ -27,6 +29,20 @@ namespace PromotionCS
                 }
 
                 return total;
+            }
+        }
+
+        public double DiscountedPrice
+        {
+            get
+            {
+                double total = 0;
+                foreach (OrderItem item in Items)
+                {
+                    total += item.Product.Price;
+                }
+
+                return total - Discount;
             }
         }
 
